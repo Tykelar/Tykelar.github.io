@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Technological Achievements — a tag-filterable gallery of José Pedro Henriques' projects across QA, AI, Immersive Tech, Cybersecurity and more.">
+  <meta property="og:title" content="Technological Achievements — José Pedro Henriques">
+  <meta property="og:description" content="A tag-filterable gallery of projects. One project can belong to several areas.">
+  <meta property="og:type" content="website">
+  <title>Technological Achievements — José Pedro Henriques</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-root="" data-view="gallery">
+
+  <header data-shell="header"></header>
+
+  <main class="section" style="padding-top:calc(var(--nav-h) + 56px)">
+    <div class="container-wide container">
+      <nav class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span class="current">Technological</span></nav>
+      <div class="section-head">
+        <p class="eyebrow">Pillar · Technological Achievements</p>
+        <h1 class="section-title">What I build &amp; engineer</h1>
+        <p class="section-intro">
+          Everything technological in one place, navigated by tags — a project can carry several
+          (the thesis is AI <em>and</em> QA <em>and</em> Process). Select tags to filter; they combine
+          with <strong>OR</strong>. Each card opens its own page.
+        </p>
+      </div>
+
+      <div id="filter-bar" class="filter-bar" role="group" aria-label="Filter projects by area"></div>
+      <p id="filter-meta" class="filter-meta"></p>
+      <div id="gallery-grid" class="card-grid"></div>
+
+      <noscript><p class="filter-meta">This gallery is rendered from a data registry — please enable JavaScript, or browse the <a href="timeline.html">timeline</a>.</p></noscript>
+    </div>
+  </main>
+
+  <footer data-shell="footer"></footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
