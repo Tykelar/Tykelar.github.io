@@ -32,10 +32,10 @@
     location: 'Leiria, Portugal'
   };
   var NAV = [
+    { id: 'timeline',      label: 'Timeline',       href: 'timeline.html', highlight: true },
+    { id: 'ongoing',       label: 'Ongoing',        href: 'ongoing.html', highlight: true },
     { id: 'technological', label: 'Technological', href: 'technological.html' },
-    { id: 'involvement',   label: 'Organizational', href: 'involvement.html' },
-    { id: 'ongoing',       label: 'Ongoing',        href: 'ongoing.html' },
-    { id: 'timeline',      label: 'Timeline',       href: 'timeline.html' }
+    { id: 'involvement',   label: 'Organizational', href: 'involvement.html' }
   ];
   var PILLAR_COLOR = { tech: '#0d9488', org: '#ea580c', education: '#2563eb', personal: '#7c3aed' };
   var PILLAR_LABEL = { tech: 'Technological', org: 'Organizational', education: 'Education', personal: 'Personal' };
@@ -74,12 +74,17 @@
     var header = document.querySelector('[data-shell="header"]');
     if (header) {
       header.id = 'navbar';
-      var links = NAV.map(function (n) {
-        return '<li><a href="' + r(n.href) + '"' + (n.id === ap ? ' class="active"' : '') + '>' + n.label + '</a></li>';
-      }).join('');
+      function navLink(n) {
+        return '<a href="' + r(n.href) + '"' + (n.id === ap ? ' class="active"' : '') + '>' + n.label + '</a>';
+      }
+      var group = NAV.filter(function (n) { return n.highlight; });
+      var rest = NAV.filter(function (n) { return !n.highlight; });
+      var links =
+        '<li class="nav-group">' + group.map(navLink).join('') + '</li>' +
+        rest.map(function (n) { return '<li>' + navLink(n) + '</li>'; }).join('');
       header.innerHTML =
         '<div class="nav-container">' +
-          '<a href="' + r('index.html') + '" class="nav-logo">JPH</a>' +
+          '<a href="' + r('index.html') + '" class="nav-logo">Home</a>' +
           '<ul class="nav-links" id="nav-links">' + links +
             '<li><a href="' + r('index.html') + '#contact">Contact</a></li>' +
           '</ul>' +
@@ -151,7 +156,7 @@
     var ext = isExternal(it.href);
     var tagHtml = (it.tags || []).map(function (k) { return tagChip(k, false); }).join('');
     var stackHtml = (it.stack || []).map(function (s) { return '<span class="stack-badge">' + esc(s) + '</span>'; }).join('');
-    var cls = 'card' + (it.featured ? ' card--featured card--ribbon' : '');
+    var cls = 'card';
     var open = it.href ? '<a class="' + cls + '" href="' + r(it.href) + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' : '<div class="' + cls + '">';
     var close = it.href ? '</a>' : '</div>';
     var cta = it.href ? '<span class="card__cta">' + (ext ? 'Visit ' : 'See in detail ') + '→</span>' : '';
@@ -173,13 +178,6 @@
     if (feat) feat.innerHTML = grid(ITEMS.filter(function (i) { return i.featured; }));
     var chips = document.getElementById('tag-chips');
     if (chips) chips.innerHTML = Object.keys(TAGS).map(function (k) { return tagChip(k, true); }).join('');
-    var teaser = document.getElementById('ongoing-teaser');
-    if (teaser) {
-      var n = ITEMS.filter(function (i) { return i.status === 'ongoing'; }).length;
-      teaser.innerHTML =
-        '<div><h3>Currently in motion</h3><p>' + n + ' ongoing threads — current work, research, and writing.</p></div>' +
-        '<a class="btn btn-outline" href="' + r('ongoing.html') + '">See what I\'m doing now →</a>';
-    }
     // hero load-in
     var heroEls = document.querySelectorAll('.hero .fade-up');
     heroEls.forEach(function (el, i) { setTimeout(function () { el.classList.add('visible'); }, 120 + i * 110); });
@@ -205,7 +203,10 @@
     if (bar) {
       var allOn = selected.length === 0;
       var chips = ['<button class="filter-chip filter-chip--all" data-tag="" aria-pressed="' + allOn + '">All <span class="fc-count">' + pool.length + '</span></button>'];
-      Object.keys(TAGS).forEach(function (k) {
+      var sortedKeys = Object.keys(TAGS).sort(function (a, b) {
+        return TAGS[a].label.localeCompare(TAGS[b].label);
+      });
+      sortedKeys.forEach(function (k) {
         chips.push('<button class="filter-chip" style="--tag:' + TAGS[k].color + '" data-tag="' + k + '" aria-pressed="' + (selected.indexOf(k) > -1) + '">' +
           '<span aria-hidden="true">' + TAGS[k].icon + '</span>' + esc(TAGS[k].label) + ' <span class="fc-count">' + count(k) + '</span></button>');
       });
@@ -253,24 +254,43 @@
     }).join('');
 
     root.innerHTML =
+      '<div class="tl-viewbar">' +
+        '<div class="tl-view" role="group" aria-label="Choose how many events to show">' +
+          '<button type="button" class="tl-seg is-active" id="tl-seg-curated" data-all="0" aria-pressed="true">' +
+            '<span class="tl-seg__label">Highlights</span>' +
+          '</button>' +
+          '<button type="button" class="tl-seg" id="tl-seg-all" data-all="1" aria-pressed="false">' +
+            '<span class="tl-seg__label">All events</span>' +
+          '</button>' +
+          '<span class="tl-view__thumb" aria-hidden="true"></span>' +
+        '</div>' +
+        '<p class="tl-view__count" id="tl-count" aria-live="polite"></p>' +
+      '</div>' +
       '<div class="tl-controls">' +
         '<div class="tl-legend">' + legend + '</div>' +
-        '<label class="tl-toggle"><input type="checkbox" id="tl-all"><span class="tl-switch"></span>Show all events</label>' +
       '</div>' +
       '<div class="tl-scroll"><div class="tl-chart" id="tl-chart"></div></div>' +
       '<div class="tl-detail" id="tl-detail"></div>' +
-      '<p class="tl-hint">Tip: click any bar to see a summary and open its full page. Toggle “Show all events” for the complete record.</p>';
+      '<p class="tl-hint">Tip: scroll left to travel further into the past. Click any bar to see a summary and open its full page. Switch to <strong>All events</strong> for the complete record.</p>';
 
     function draw() {
       var pool = ITEMS.filter(function (i) { return i.start && (showAll || i.curated); });
+      var total = ITEMS.filter(function (i) { return i.start; }).length;
+      var countEl = document.getElementById('tl-count');
+      if (countEl) countEl.textContent = showAll
+        ? 'Showing all ' + total + ' events'
+        : 'Showing ' + pool.length + ' of ' + total + ' events';
       var min = Math.floor(pool.reduce(function (m, i) { return Math.min(m, dnum(i.start)); }, Infinity));
       var max = Math.ceil(Math.max(nowNum(), pool.reduce(function (m, i) { return Math.max(m, dnum(i.end) || nowNum()); }, -Infinity)));
       var span = (max - min) || 1;
       var xPct = function (n) { return ((n - min) / span) * 100; };
 
-      // axis ticks (every year, thinned if many)
-      var step = span > 10 ? 2 : 1, ticks = '';
-      for (var y = min; y <= max; y += step) ticks += '<span class="tl-tick" style="left:' + xPct(y) + '%">' + y + '</span>';
+      // axis ticks + matching full-height gridlines (every year, thinned if many)
+      var step = span > 10 ? 2 : 1, ticks = '', grid = '';
+      for (var y = min; y <= max; y += step) {
+        ticks += '<span class="tl-tick" style="left:' + xPct(y) + '%">' + y + '</span>';
+        grid  += '<span class="tl-gridline" style="left:' + xPct(y) + '%"></span>';
+      }
       var nowL = xPct(nowNum());
 
       var lanesHtml = Object.keys(TRACKS).map(function (tk) {
@@ -302,7 +322,13 @@
       }).join('');
 
       document.getElementById('tl-chart').innerHTML =
-        '<div class="tl-axis">' + ticks + '<span class="tl-tick" style="left:' + nowL + '%;color:var(--accent)">Now</span></div>' + lanesHtml;
+        '<div class="tl-axis">' + ticks + '<span class="tl-tick tl-tick--now" style="left:' + nowL + '%">Now</span></div>' +
+        '<div class="tl-lanes">' +
+          '<div class="tl-grid" aria-hidden="true">' + grid +
+            '<span class="tl-nowline" style="left:' + nowL + '%"></span>' +
+          '</div>' +
+          lanesHtml +
+        '</div>';
 
       var detail = document.getElementById('tl-detail');
       document.querySelectorAll('.tl-bar').forEach(function (bar) {
@@ -316,8 +342,33 @@
           detail.classList.add('open');
         });
       });
+
+      // Default to the last ~2 years; widen the chart so older history scrolls in from the left.
+      var scroller = root.querySelector('.tl-scroll');
+      var chart = document.getElementById('tl-chart');
+      var labelW = 150;                                  // matches .tl-lane__label width
+      var visTrack = scroller.clientWidth - labelW;      // visible track area
+      var yearsVisible = 5;
+      if (visTrack > 120 && span > yearsVisible) {
+        var pxPerYear = visTrack / yearsVisible;
+        chart.style.width = (labelW + span * pxPerYear) + 'px';
+        scroller.scrollLeft = scroller.scrollWidth;      // anchor the right edge (Now) into view
+      } else {
+        chart.style.width = '';                          // short history: fit without scrolling
+      }
     }
-    document.getElementById('tl-all').addEventListener('change', function (e) { showAll = e.target.checked; draw(); });
+    var segCurated = document.getElementById('tl-seg-curated');
+    var segAll = document.getElementById('tl-seg-all');
+    function setView(all) {
+      showAll = all;
+      segAll.classList.toggle('is-active', all);
+      segCurated.classList.toggle('is-active', !all);
+      segAll.setAttribute('aria-pressed', all ? 'true' : 'false');
+      segCurated.setAttribute('aria-pressed', all ? 'false' : 'true');
+      draw();
+    }
+    segCurated.addEventListener('click', function () { setView(false); });
+    segAll.addEventListener('click', function () { setView(true); });
     draw();
   }
 

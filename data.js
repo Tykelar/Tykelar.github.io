@@ -47,10 +47,10 @@ window.ITEMS = [
     icon: '🧪',
     pillar: 'tech',
     tags: ['qa', 'ci-cd', 'process', 'ai'],
-    stack: ['Cypress', 'Playwright', 'GitLab CI', 'Test Architecture'],
-    status: 'ongoing',
-    start: '2025-09', end: null,
-    track: 'work', curated: true, featured: true,
+    stack: ['Cypress', 'Playwright', 'GitLab CI', 'Test Architecture', 'AI Agents'],
+    status: 'completed',
+    start: '2025-09', end: '2026-06',
+    track: 'work', curated: true, featured: false,
     summary: 'Redesigned QA infrastructure and CI workflows on an AR-powered Digital Twin platform — cutting pipeline time by more than 50% and lifting features shipped per sprint.',
     detail: {
       context: 'Software Quality Engineer · Internship',
@@ -64,6 +64,11 @@ window.ITEMS = [
           'Standardized test naming conventions and introduced seed-driven data setup to cut coupling and instability.',
           'Built and maintained an automated test battery; created GitLab CI pipeline jobs; drove AI-agent integration into engineering workflows.',
           'Assessed Cypress vs Playwright trade-offs for long-term scalability.'
+        ]},
+        { h: 'AI agents in the loop', list: [
+          'Identified high-friction, repetitive tasks suited to agent assistance',
+          'Wired LLM-based agents into CI and review workflows pragmatically',
+          'Kept humans in the loop on anything that gates a release'
         ]},
         { h: 'Result', p: 'A faster, more trustworthy pipeline and a measurably higher delivery rate — quality shifted left into everyday engineering rather than bolted on at the end.' }
       ]
@@ -80,7 +85,7 @@ window.ITEMS = [
     stack: ['CI/CD', 'QA Architecture', 'Research'],
     status: 'ongoing',
     start: '2024-09', end: null,
-    track: 'education', curated: true, featured: false,
+    track: 'education', curated: true, featured: true,
     summary: 'Research on scalable, understandable, AI-ready engineering infrastructures — CI/CD architecture, shift-left quality, flakiness dynamics, and toolchain migration criteria.',
     detail: {
       context: "MSc Computer Engineering — Mobile Computing · Polytechnic University of Leiria",
@@ -98,47 +103,50 @@ window.ITEMS = [
     href: 'projects/ai-ready-infra.html'
   },
   {
-    id: 'ai-agent-workflows',
-    title: 'AI Agents in Engineering Workflows',
-    org: 'Glartek',
-    icon: '🤖',
+    id: 'sign-language-recognition',
+    title: 'Sign Language Recognition — Image-to-Text',
+    org: 'BSc Academic Project',
+    icon: '🤟',
     pillar: 'tech',
-    tags: ['ai', 'ci-cd'],
-    stack: ['LLMs', 'AI Agents', 'Automation'],
-    status: 'ongoing',
-    start: '2025-10', end: null,
-    track: 'work', curated: false, featured: false,
-    summary: 'Integrating AI agents into day-to-day engineering and QA workflows to accelerate repetitive tasks and augment the pipeline.',
+    tags: ['ai'],
+    stack: ['Python', 'Computer Vision', 'ML'],
+    status: 'completed',
+    start: '2023', end: '2024',
+    track: 'education', curated: true, featured: false,
+    summary: 'Image-recognition system that identifies sign-language gestures and converts them to text output, reaching 98% classification accuracy.',
     detail: {
-      context: 'Glartek · QA / Engineering',
-      intro: 'Exploring where LLM-based agents add real leverage in the engineering loop — from test scaffolding to triage — without compromising trust in the pipeline.',
+      context: 'BSc Academic Project',
+      intro: 'A computer-vision system that reads sign-language gestures from images and outputs the corresponding text — the capstone machine-learning project of my bachelor.',
       sections: [
-        { h: 'Direction', list: [
-          'Identify high-friction, repetitive tasks suitable for agent assistance',
-          'Wire agents into CI and review workflows pragmatically',
-          'Keep humans in the loop on anything that gates a release'
+        { h: 'What it does', p: 'Identifies sign-language gestures from images and converts them to text output, achieving 98% classification accuracy.' },
+        { h: 'Covered', list: [
+          'Regression and multiclass model training',
+          'Image preprocessing and feature handling for gesture recognition',
+          'Python computer-vision and ML frameworks'
         ]}
       ]
     },
-    href: 'projects/ai-agent-workflows.html'
+    href: 'projects/sign-language-recognition.html'
   },
   {
-    id: 'academic-ml',
+    id: 'applied-ml',
     title: 'Applied Machine Learning — CNNs, YOLO, RNNs',
-    org: 'Academic',
+    org: "Master's Coursework",
     icon: '🔬',
     pillar: 'tech',
     tags: ['ai'],
     stack: ['Python', 'CNNs', 'YOLO', 'RNNs', 'LLMs'],
     status: 'completed',
-    start: '2022', end: '2024',
+    start: '2024', end: '2025',
     track: 'education', curated: false, featured: false,
-    summary: 'Coursework and projects across computer vision and sequence models — convolutional networks, YOLO object detection, recurrent networks, and LLMs.',
+    summary: 'Graduate coursework and a larger applied project across computer vision and sequence models — multiclass and multilabel classification, transfer learning, CNNs, YOLO, RNNs, and LLMs.',
     detail: {
-      context: 'BSc / coursework',
-      intro: 'Hands-on grounding in modern machine learning across vision and sequence domains.',
+      context: "Master's coursework",
+      intro: 'Hands-on grounding in modern machine learning across vision and sequence domains, building on undergraduate foundations toward multilabel and transfer-learning work.',
       sections: [
         { h: 'Covered', list: [
+          'Multiclass and multilabel classification',
+          'Transfer learning',
           'CNNs for image classification',
           'YOLO for real-time object detection',
           'RNNs for sequential data',
@@ -146,7 +154,7 @@ window.ITEMS = [
         ]}
       ]
     },
-    href: 'projects/academic-ml.html'
+    href: 'projects/applied-ml.html'
   },
   {
     id: 'big-data-vr',
@@ -184,7 +192,7 @@ window.ITEMS = [
     tags: ['ar', 'digital-twins', 'mobile'],
     stack: ['Kotlin', 'React Native', 'Firebase', 'A-Frame'],
     status: 'completed',
-    start: '2024', end: '2024',
+    start: '2025', end: '2025',
     track: 'projects', curated: true, featured: false,
     summary: 'Real-time animal tracking with digital-twin state monitoring, two-way escape alerts, and an AR layer spatially mapping positions in 3D.',
     detail: {
@@ -235,7 +243,7 @@ window.ITEMS = [
     tags: ['security'],
     stack: ['Footprinting', 'OSINT', 'Offensive Security'],
     status: 'completed',
-    start: '2023', end: '2023',
+    start: '2025', end: '2025',
     track: 'projects', curated: true, featured: false,
     summary: 'Security assessment for a cooperative with physical infrastructure — attack-surface mapping, vulnerability identification, a prioritized report, and a client presentation.',
     detail: {
@@ -261,7 +269,7 @@ window.ITEMS = [
     tags: ['mobile'],
     stack: ['React Native', 'Firebase', 'Full-stack'],
     status: 'completed',
-    start: '2023', end: '2023',
+    start: '2025', end: '2025',
     track: 'projects', curated: false, featured: false,
     summary: 'A full-stack mobile app letting a cooperative access and manage client information on the go.',
     detail: {
@@ -312,11 +320,11 @@ window.ITEMS = [
     tags: [],
     stack: ['Leadership', 'Partnerships', 'Community'],
     status: 'completed',
-    start: '2023-01', end: '2025-02',
+    start: '2023-01', end: '2026-02',
     track: 'leadership', curated: true, featured: true,
     summary: 'Founded and led a community-focused non-profit cooperative on local educational, social, and environmental initiatives — legal setup, partnerships, and programmes.',
     detail: {
-      context: 'Founder & President · Jan 2023 – Feb 2025',
+      context: 'Founder & President · Jan 2023 – Feb 2026',
       intro: 'Florescer is a community-focused non-profit cooperative I founded and ran, working on local educational, social, and environmental initiatives.',
       sections: [
         { h: 'What I did', list: [
@@ -337,8 +345,8 @@ window.ITEMS = [
     pillar: 'org',
     tags: [],
     stack: ['Leadership', 'Teamwork', 'Outdoors'],
-    status: 'ongoing',
-    start: '2007', end: null,
+    status: 'completed',
+    start: '2007', end: '2025',
     track: 'leadership', curated: true, featured: false,
     summary: 'More than 18 years of Scouting, in national and international activities — a long-running school of leadership, teamwork, and service.',
     detail: {
@@ -402,6 +410,112 @@ window.ITEMS = [
       ]
     },
     href: 'involvement/impact-malta.html'
+  },
+  {
+    id: 'banco-alimentar',
+    title: 'Banco Alimentar — Volunteer',
+    org: 'Food Bank Against Hunger',
+    icon: '🥫',
+    pillar: 'org',
+    tags: [],
+    stack: ['Volunteering', 'Logistics', 'Community'],
+    status: 'completed',
+    start: '2018', end: '2025',
+    track: 'leadership', curated: true, featured: false,
+    summary: 'Recurring volunteer across multiple food-collection campaigns — sorting donations in the warehouse, transporting goods from stores, and gathering donations in-store.',
+    detail: {
+      context: 'Volunteer · 2018 – 2025',
+      intro: 'Banco Alimentar (Food Bank Against Hunger) runs large-scale food-collection drives that rely on volunteers. I took part across several campaigns over the years, in different roles.',
+      sections: [
+        { h: 'What I did', list: [
+          'Worked in the storage/warehouse department, sorting and organizing donated goods',
+          'Collected and transported donations from partner stores',
+          'Gathered donations in-store during collection campaigns'
+        ]},
+        { h: 'Why it matters', p: 'A long-running, hands-on commitment to community service — showing up repeatedly for the unglamorous logistics that make food drives actually work.' }
+      ]
+    },
+    href: 'involvement/banco-alimentar.html'
+  },
+  {
+    id: 'unlimited-future',
+    title: 'Unlimited Future — Ambassador',
+    org: 'NGO',
+    icon: '🚀',
+    pillar: 'org',
+    tags: [],
+    stack: ['Ambassadorship', 'Events', 'Community'],
+    status: 'completed',
+    start: '2020', end: '2023',
+    track: 'leadership', curated: true, featured: false,
+    summary: 'Student ambassador for an NGO bridging students and companies — helped coordinate training courses and events connecting emerging talent with industry.',
+    detail: {
+      context: 'Ambassador · 2020 – 2023',
+      intro: 'Unlimited Future is an NGO that connects students with the professional world. As an ambassador, I helped bring its programmes to life and grow its reach.',
+      sections: [
+        { h: 'What I did', list: [
+          'Helped coordinate training courses for students',
+          'Organized various events connecting students with companies',
+          'Represented the NGO within the student community'
+        ]}
+      ]
+    },
+    href: 'involvement/unlimited-future.html'
+  },
+  {
+    id: 'quinta-da-carvalheira',
+    title: 'Quinta da Carvalheira — Eco Project',
+    org: 'Community Eco Project',
+    icon: '🌿',
+    pillar: 'org',
+    tags: [],
+    stack: ['Construction', 'Agriculture', 'Community'],
+    status: 'completed',
+    start: '2024', end: '2025',
+    track: 'leadership', curated: true, featured: false,
+    summary: 'Hands-on contributor to a community eco project for nature connection and personal development — building the space, working the land, and bringing people into the vision.',
+    detail: {
+      context: 'Contributor · 2024 – 2025',
+      intro: 'Quinta da Carvalheira is a community-centred eco project built around nature connection and personal development. I was part of the team that brought it to life, from the ground up.',
+      sections: [
+        { h: 'What I did', list: [
+          'Helped with the building and construction of the physical space',
+          'Took part in agricultural and land work',
+          'Connected people to the project and grew its community',
+          'Contributed to shaping and developing the project\'s vision'
+        ]},
+        { h: 'Why it matters', p: 'A tangible blend of hands-on building, working the land, and community-building — turning an idea for nature connection and personal growth into a real place.' }
+      ]
+    },
+    href: 'involvement/quinta-da-carvalheira.html'
+  },
+
+  {
+    id: 'student-radio',
+    title: 'Student Radio — Founder & Initiator',
+    org: 'High School',
+    icon: '📻',
+    pillar: 'org',
+    tags: [],
+    stack: ['Initiative', 'Funding Bid', 'Procurement', 'Community'],
+    status: 'completed',
+    start: '2019', end: '2020',
+    track: 'leadership', curated: true, featured: false,
+    summary: 'Won a competition for governmental funds to improve my high school, then used them to set up a student-run radio station — from the winning pitch to selecting and buying the equipment.',
+    detail: {
+      context: 'Founder & Initiator · 12th grade',
+      intro: 'A competition offered governmental funding to improve the school. I entered with the idea of giving students their own voice — a radio station — and won. From there I turned the funding into a working setup students could actually use.',
+      sections: [
+        { h: 'What I did', list: [
+          'Conceived and pitched the project, winning a competition for governmental school-improvement funds',
+          'Defined what a student-run radio station needed to actually work',
+          'Researched, selected, and decided on the equipment to purchase within the budget',
+          'Set up the station so students could broadcast and use it'
+        ]},
+        { h: 'Why it matters', p: 'An early, end-to-end example of turning an idea into funding into a real, working thing — securing resources through a competitive bid and translating them into infrastructure that outlived me at the school.' }
+      ]
+    },
+    href: 'involvement/student-radio.html'
   },
 
   /* ---------------------------------------------------------- EDUCATION (timeline only) */

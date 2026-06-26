@@ -69,7 +69,7 @@ state. Tick items as they land and keep statuses honest.
 - ⬜ Accessibility pass (keyboard, contrast, alt text, landmarks) — WCAG AA
 - ⬜ Performance pass (image sizing, lazy-load, font strategy, Lighthouse)
 - ⬜ Cross-browser + mobile QA (incl. proper vertical timeline on small screens)
-- ⬜ 404 page
+- ✅ 404 page (`404.html`, self-contained, root-absolute links)
 - ⬜ Deploy (host TBD) + custom domain (TBD)
 
 ## Backlog / ideas (unscheduled)
