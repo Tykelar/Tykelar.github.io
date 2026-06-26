@@ -270,8 +270,41 @@
         '<div class="tl-legend">' + legend + '</div>' +
       '</div>' +
       '<div class="tl-scroll"><div class="tl-chart" id="tl-chart"></div></div>' +
-      '<div class="tl-detail" id="tl-detail"></div>' +
-      '<p class="tl-hint">Tip: scroll left to travel further into the past. Click any bar to see a summary and open its full page. Switch to <strong>All events</strong> for the complete record.</p>';
+      '<p class="tl-hint">Tip: scroll left to travel further into the past. Click any bar to pop up a summary and open its full page. Switch to <strong>All events</strong> for the complete record.</p>' +
+      '<div class="tl-modal" id="tl-modal" hidden>' +
+        '<div class="tl-modal__backdrop" data-tl-close></div>' +
+        '<div class="tl-modal__dialog" role="dialog" aria-modal="true" aria-label="Event detail">' +
+          '<button type="button" class="tl-modal__close" aria-label="Close" data-tl-close>&times;</button>' +
+          '<div class="tl-modal__body" id="tl-modal-body"></div>' +
+        '</div>' +
+      '</div>';
+
+    // Modal: bound once, reused across redraws.
+    var modal = document.getElementById('tl-modal');
+    var modalBody = document.getElementById('tl-modal-body');
+    var lastFocused = null;
+    function openModal(it) {
+      lastFocused = document.activeElement;
+      modalBody.innerHTML = cardHTML(it);
+      modal.hidden = false;
+      document.body.classList.add('tl-modal-open');
+      var closeBtn = modal.querySelector('.tl-modal__close');
+      if (closeBtn) closeBtn.focus();
+    }
+    function closeModal() {
+      if (modal.hidden) return;
+      modal.hidden = true;
+      modalBody.innerHTML = '';
+      document.body.classList.remove('tl-modal-open');
+      document.querySelectorAll('.tl-bar[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    modal.addEventListener('click', function (e) {
+      if (e.target.hasAttribute('data-tl-close')) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
 
     function draw() {
       var pool = ITEMS.filter(function (i) { return i.start && (showAll || i.curated); });
@@ -330,16 +363,12 @@
           lanesHtml +
         '</div>';
 
-      var detail = document.getElementById('tl-detail');
       document.querySelectorAll('.tl-bar').forEach(function (bar) {
         bar.addEventListener('click', function () {
-          var was = bar.getAttribute('aria-expanded') === 'true';
           document.querySelectorAll('.tl-bar[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
-          if (was) { detail.classList.remove('open'); detail.innerHTML = ''; return; }
           bar.setAttribute('aria-expanded', 'true');
           var it = ITEMS.filter(function (i) { return i.id === bar.dataset.id; })[0];
-          detail.innerHTML = cardHTML(it);
-          detail.classList.add('open');
+          openModal(it);
         });
       });
 

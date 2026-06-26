@@ -610,16 +610,47 @@ a.tag-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px color-mix
 .tl-bar .tl-bar__emoji { font-size: 13px; line-height: 1; }
 .tl-bar .tl-bar__txt { overflow: hidden; text-overflow: ellipsis; }
 
-.tl-detail { margin-top: 28px; display: none; }
-.tl-detail.open { display: block; animation: tl-detail-in 0.28s cubic-bezier(0.2, 0.7, 0.3, 1); }
-@keyframes tl-detail-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.tl-detail .card { max-width: 520px; }
 .tl-hint { font-size: 13px; color: var(--text-muted); margin-top: 22px; }
+
+/* Event detail modal */
+.tl-modal[hidden] { display: none; }
+.tl-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.tl-modal__backdrop {
+  position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--text) 45%, transparent);
+  backdrop-filter: blur(2px);
+  animation: tl-modal-fade 0.2s ease;
+}
+.tl-modal__dialog {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 520px;
+  max-height: calc(100vh - 48px); overflow: auto;
+  animation: tl-modal-in 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.tl-modal__dialog .card { max-width: none; margin: 0; }
+.tl-modal__dialog .card__top { padding-right: 40px; }
+.tl-modal__close {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); background: var(--card);
+  color: var(--text); font-size: 22px; line-height: 1; cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.tl-modal__close:hover { background: var(--bg); transform: scale(1.06); }
+body.tl-modal-open { overflow: hidden; }
+@keyframes tl-modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tl-modal-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   .tl-bar, .tl-view__thumb, .tl-lane { transition: none; }
   .tl-bar:hover, .tl-bar[aria-expanded="true"] { transform: none; }
-  .tl-detail.open { animation: none; }
+  .tl-modal__backdrop, .tl-modal__dialog { animation: none; }
 }
 
 /* ============================================================

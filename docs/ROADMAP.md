@@ -64,6 +64,7 @@ state. Tick items as they land and keep statuses honest.
 ## Phase 5 — Polish, performance, ship
 *Goal: production quality.*
 
+- ⬜ Change profile picture (replace current hero/headshot image)
 - 🔄 SEO: per-page `<title>`/description/OG done; **todo:** JSON-LD, `sitemap.xml`, `robots.txt`
 - ⬜ Real OG/share image
 - ⬜ Accessibility pass (keyboard, contrast, alt text, landmarks) — WCAG AA
@@ -74,6 +75,7 @@ state. Tick items as they land and keep statuses honest.
 
 ## Backlog / ideas (unscheduled)
 
+- ⬜ **Licenses & certifications section** — new section showcasing professional licenses/certs (with issuer, date, credential link)
 - 💤 Light/dark toggle
 - 💤 Per-project image galleries / short clips
 - 💤 PT/EN language toggle
