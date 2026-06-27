@@ -1,0 +1,51 @@
+# usi-web.yaml — website presentation overrides for scripts/gen_data.py.
+#
+# The FACTS live in the USI corpus (../USI). This file only adds website chrome.
+# A USI block is surfaced on the site when it has a `pillar` and `public` audience.
+#
+#   key      = USI block id (e.g. project-big-data-vr)
+#   icon     = emoji shown on the card
+#   curated  = include in curated strips
+#   featured = hero/featured placement (else taken from the block's `featured`)
+#   id       = website slug override (default: block id minus its type prefix)
+#   summary  = override the auto-derived one-liner (else first body paragraph)
+#   href     = override the auto-derived link
+#   hidden   = true to exclude from the site
+items:
+  # --- Technological -------------------------------------------------------
+  experience-glartek:                  { id: glartek-sqe, icon: "🧪", curated: true, summary: "Redesigned QA infrastructure and CI workflows on an AR-powered Digital Twin platform — cutting pipeline time by more than 50% and lifting features shipped per sprint." }
+  project-ai-ready-infra:              { icon: "🧠", curated: true }
+  project-sign-language-recognition:   { icon: "🤟", curated: true }
+  project-big-data-vr:                 { icon: "🥽", curated: true }
+  project-ar-animal-tracking:          { icon: "🐾", curated: true }
+  project-vr-architectural-walkthrough: { icon: "🏛️" }
+  project-cybersecurity-assessment:    { icon: "🔐", curated: true }
+  project-siem-implementation:         { icon: "🛡️" }
+  project-mobile-client-app:           { icon: "📲" }
+  project-maker-3d-printing:           { icon: "🖨️" }
+  project-cnn-lol:                     { icon: "🎮" }
+  project-yolo-detection:              { icon: "🎯" }
+  project-rnn-sequence:                { icon: "🔮" }
+  project-matlab-simulations:          { icon: "📐" }
+  project-usi-corpus:                  { icon: "🗂️", curated: true }
+  project-saas-marketing-platform:     { icon: "🌐", curated: true }
+  project-game-dev:                    { icon: "🕹️" }
+  project-spss-analysis:               { icon: "📈" }
+  # --- Organizational ------------------------------------------------------
+  experience-florescer:                { icon: "🌱", curated: true, featured: true }
+  experience-impact-malta:             { icon: "🤝" }
+  experience-airking:                  { icon: "📦", hidden: true }   # not on the original site; unhide to surface
+  involvement-scouts:                  { icon: "⚜️", curated: true }
+  involvement-world-scout-jamboree:    { icon: "🏕️", curated: true }
+  involvement-banco-alimentar:         { icon: "🥫", curated: true }
+  involvement-erasmus:                 { icon: "🌍" }
+  involvement-erasmus-student-network: { icon: "🧳" }
+  involvement-unlimited-future:        { icon: "🚀", curated: true }
+  involvement-quinta-da-carvalheira:   { icon: "🌿", curated: true }
+  involvement-student-radio:           { icon: "📻", curated: true }
+  # --- Education (timeline) ------------------------------------------------
+  education-msc-leiria:                { icon: "🎓", curated: true }
+  education-bsc-aveiro:                { icon: "🏫", curated: true }
+  # --- Personal / Writing --------------------------------------------------
+  writing-blog-momentum:               { icon: "🌱" }
+  writing-blog-madman:                 { icon: "✍️" }

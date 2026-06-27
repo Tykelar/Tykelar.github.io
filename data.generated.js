@@ -662,7 +662,7 @@ window.ITEMS = [
     "id": "saas-marketing-platform",
     "title": "Niche-Field SaaS Marketing & Admin Platform",
     "org": "Client / Freelance Project",
-    "icon": "•",
+    "icon": "🌐",
     "pillar": "tech",
     "tags": [],
     "stack": [
@@ -672,7 +672,7 @@ window.ITEMS = [
     "start": null,
     "end": null,
     "track": "projects",
-    "curated": false,
+    "curated": true,
     "featured": false,
     "summary": "Designed and built a SaaS web platform from scratch to help businesses in a niche field market themselves and administer the information relevant to their operations.",
     "detail": {
