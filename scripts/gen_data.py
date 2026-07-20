@@ -47,9 +47,12 @@ def strip_prefix(block_id: str) -> str:
     return block_id
 
 
+TITLES: dict[str, str] = {}
+
+
 def clean(text: str) -> str:
     text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
-    text = re.sub(r"\[\[[^\]]+\]\]", "", text)             # drop [[wiki-links]]
+    text = re.sub(r"\[\[([^\]]+)\]\]", lambda m: TITLES.get(m.group(1), m.group(1)), text)
     text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)   # [text](url) -> text
     return text.replace("**", "").replace("`", "").strip()
 
@@ -81,12 +84,13 @@ def body_to_detail(body: str) -> tuple[str, list[dict]]:
     out: list[dict] = []
     for s in sections:
         bullets = [clean(l.strip()[2:]) for l in s["lines"] if l.strip().startswith("- ")]
+        h = clean(s["h"])
         if bullets:
-            out.append({"h": s["h"], "list": bullets})
+            out.append({"h": h, "list": bullets})
         else:
             p = clean(" ".join(l.strip() for l in s["lines"] if l.strip()))
             if p:
-                out.append({"h": s["h"], "p": p})
+                out.append({"h": h, "p": p})
     return clean(" ".join(intro_parts)), out
 
 
@@ -112,8 +116,11 @@ def main() -> None:
     web_doc = yaml.safe_load((SITE / "usi-web.yaml").read_text(encoding="utf-8")) or {}
     web = web_doc.get("items", {}) or {}
 
+    all_blocks = build.load_blocks()
+    TITLES.update({b["meta"]["id"]: b["meta"].get("title", b["meta"]["id"]) for b in all_blocks})
+
     blocks = [
-        b for b in build.load_blocks()
+        b for b in all_blocks
         if b["meta"].get("pillar") and "public" in (b["meta"].get("audience") or [])
     ]
 

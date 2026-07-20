@@ -9,7 +9,10 @@
       "Read(*)",
       "Read(**)",
       "Glob(*)",
-      "Grep(*)"
+      "Grep(*)",
+      "Bash(python scripts/gen_data.py -o data.generated.js)",
+      "Bash(node -e ' *)",
+      "Bash(pkill -f \"http.server 8791\")"
     ],
     "defaultMode": "acceptEdits"
   }

@@ -175,8 +175,17 @@ window.ITEMS = [
           ]
         },
         {
+          "h": "Computer vision (in-house image recognition)",
+          "list": [
+            "Collaborated on developing an in-house image-recognition application built on YOLO object detection.",
+            "Labeled/annotated training images and helped purify and curate the dataset for higher-quality training.",
+            "Helped define detection classes and ran/evaluated training tests on the models.",
+            "Contributed optimization strategies to improve recognition accuracy and performance."
+          ]
+        },
+        {
           "h": "Result",
-          "p": "A faster, more trustworthy pipeline and a measurably higher delivery rate — quality shifted left into everyday engineering rather than bolted on at the end. Directly informs (and is informed by) my thesis: ."
+          "p": "A faster, more trustworthy pipeline and a measurably higher delivery rate — quality shifted left into everyday engineering rather than bolted on at the end. Directly informs (and is informed by) my thesis: MSc Computer Engineering — Polytechnic University of Leiria."
         }
       ]
     },
@@ -466,6 +475,66 @@ window.ITEMS = [
     "href": "projects/cybersecurity-assessment.html"
   },
   {
+    "id": "expense-tracker",
+    "title": "Shared Expense Tracker — Serverless PWA",
+    "org": "Personal Project",
+    "icon": "•",
+    "pillar": "tech",
+    "tags": [],
+    "stack": [
+      "TypeScript",
+      "React 18",
+      "Vite",
+      "Supabase",
+      "PostgreSQL",
+      "Row-Level Security",
+      "Google OAuth",
+      "Recharts",
+      "vite-plugin-pwa / Workbox"
+    ],
+    "status": "ongoing",
+    "start": "2025",
+    "end": null,
+    "track": "projects",
+    "curated": false,
+    "featured": false,
+    "summary": "A private expense-tracking PWA for two people, built to be installable on a phone, cheap, and to require no backend of my own to run or maintain. Every architectural decision traces back to that one sentence.",
+    "detail": {
+      "context": "Solo developer (full-stack, from scratch) · Personal Project",
+      "intro": "A private expense-tracking PWA for two people, built to be installable on a phone, cheap, and to require no backend of my own to run or maintain. Every architectural decision traces back to that one sentence.",
+      "sections": [
+        {
+          "h": "Architecture",
+          "list": [
+            "No custom server. The browser talks directly to Supabase",
+            "Security is enforced in the database, not the client, via Postgres Row-Level",
+            "Auth: Google OAuth — identity is delegated entirely to Google; no passwords are ever"
+          ]
+        },
+        {
+          "h": "Custom reactive layer",
+          "list": [
+            "Deliberately no Redux/Zustand. src/db/live.ts (~60 lines) implements a version"
+          ]
+        },
+        {
+          "h": "Static hosting trilogy",
+          "list": [
+            "Hash router (createHashRouter, src/main.tsx): routing lives entirely client-side,",
+            "PWA via vite-plugin-pwa (Workbox-generated service worker): installable on a phone,",
+            "Vercel, serving static files only — no functions, no server-side logic. All",
+            "Recharts for spending visualizations in the UI."
+          ]
+        },
+        {
+          "h": "Contrast with Niche-Field SaaS Marketing & Admin Platform",
+          "p": "Two deliberately different auth models across my own projects: this one delegates identity to Google OAuth and authorization to Postgres RLS, because it's a two-person app where maintaining a server isn't worth the cost. The other project (a multi-tenant marketplace) owns its own registration and uses stateless JWT instead — different context, different trade-off. Delivered solo, end to end — architecture, data model, auth/security model, reactive UI, and deploy."
+        }
+      ]
+    },
+    "href": "projects/expense-tracker.html"
+  },
+  {
     "id": "game-dev",
     "title": "Game Design & Development (Multi-Engine)",
     "org": "Academic + Independent",
@@ -621,6 +690,64 @@ window.ITEMS = [
     "href": "projects/mobile-client-app.html"
   },
   {
+    "id": "rag-mini",
+    "title": "Minimal Local RAG System (Python + Ollama)",
+    "org": "Self-directed practice project",
+    "icon": "•",
+    "pillar": "tech",
+    "tags": [
+      "ai"
+    ],
+    "stack": [
+      "Python",
+      "Ollama",
+      "nomic-embed-text",
+      "gemma4:e4b",
+      "numpy",
+      "requests"
+    ],
+    "status": "ongoing",
+    "start": "2026-07",
+    "end": null,
+    "track": "projects",
+    "curated": false,
+    "featured": false,
+    "summary": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
+    "detail": {
+      "context": "Solo developer · Self-directed practice project",
+      "intro": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
+      "sections": [
+        {
+          "h": "What it does",
+          "list": [
+            "Retrieval over project docs using Ollama's REST API directly (not the ollama package):",
+            "Vector store is a plain Python list + numpy cosine similarity — a deliberate scale",
+            "Each function maps 1:1 to a stage of a RAG system-design diagram: load → chunk → embed"
+          ]
+        },
+        {
+          "h": "Key findings",
+          "list": [
+            "Adding nomic's asymmetric prefixes (search_query: / search_document:) to the",
+            "Built eval.py, a recall@k harness against a 7-question golden set, replacing \"eyeball",
+            "Caught my own evaluation being too permissive: file-level ground truth counted"
+          ]
+        },
+        {
+          "h": "Open items",
+          "list": [
+            "Two queries still fail even at k=3: a short doc answering a generic/acronym-heavy"
+          ]
+        },
+        {
+          "h": "Why it matters",
+          "p": "Turns \"I know RAG theory\" into \"I built one, evaluated it rigorously, and caught my own eval being overly optimistic\" — a concrete maturity story that covers system design, hands-on coding, and AI-assisted development in one project."
+        }
+      ]
+    },
+    "href": "projects/rag-mini.html"
+  },
+  {
     "id": "rnn-sequence",
     "title": "RNN Sequence Prediction",
     "org": "Master's Coursework",
@@ -661,30 +788,82 @@ window.ITEMS = [
   {
     "id": "saas-marketing-platform",
     "title": "Niche-Field SaaS Marketing & Admin Platform",
-    "org": "Client / Freelance Project",
+    "org": "Personal Project",
     "icon": "🌐",
     "pillar": "tech",
-    "tags": [],
-    "stack": [
-      "Web"
+    "tags": [
+      "qa"
     ],
-    "status": "completed",
-    "start": null,
+    "stack": [
+      "TypeScript",
+      "React",
+      "Vite",
+      "TailwindCSS",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Zod",
+      "Mapbox",
+      "Cloudflare R2",
+      "Playwright",
+      "Vercel"
+    ],
+    "status": "ongoing",
+    "start": "2026-03",
     "end": null,
     "track": "projects",
     "curated": true,
     "featured": false,
-    "summary": "Designed and built a SaaS web platform from scratch to help businesses in a niche field market themselves and administer the information relevant to their operations.",
+    "summary": "A full-stack, multi-tenant SaaS web platform built from scratch to help businesses in a niche field market themselves and administer the information central to their operations.",
     "detail": {
-      "context": "Developer (full build from scratch) · Client / Freelance Project",
-      "intro": "Designed and built a SaaS web platform from scratch to help businesses in a niche field market themselves and administer the information relevant to their operations.",
+      "context": "Solo developer (full-stack, from scratch) · Personal Project",
+      "intro": "A full-stack, multi-tenant SaaS web platform built from scratch to help businesses in a niche field market themselves and administer the information central to their operations.",
       "sections": [
         {
-          "h": "What it does",
+          "h": "Architecture",
           "list": [
-            "Marketing — gives users the tools to promote and present their business.",
-            "Administration — lets users manage and organize the business information that matters"
+            "Monorepo managed with pnpm workspaces — a clean split between UI, API server,",
+            "End-to-end type safety: a single source-of-truth API schema (Zod) drives both server"
           ]
+        },
+        {
+          "h": "Frontend",
+          "list": [
+            "React + Vite SPA styled with TailwindCSS and Radix UI primitives.",
+            "TanStack Query for server-state, wouter for routing, Framer Motion for motion.",
+            "i18next for full internationalization (multi-language UI)."
+          ]
+        },
+        {
+          "h": "Backend",
+          "list": [
+            "Express (Node.js) API, deployed as serverless functions on Vercel",
+            "Auth: JWT signed into an httpOnly cookie, stateless (own registration, not",
+            "PostgreSQL accessed through Drizzle ORM, schema-first: drizzle-zod derives the",
+            "Mapbox geocoding, called server-side only — the API key never reaches the client.",
+            "File storage via Cloudflare R2 (S3-compatible API, @aws-sdk/client-s3 against R2's",
+            "Rate limiting via Upstash (managed Redis) — needed because the serverless backend has",
+            "Transactional email via Resend, structured logging with Pino."
+          ]
+        },
+        {
+          "h": "Monorepo rationale",
+          "list": [
+            "pnpm workspace split into ui/ (React), server/ (Express), and shared lib/db",
+            "Drizzle over Prisma: queries read close to SQL and types derive straight from the"
+          ]
+        },
+        {
+          "h": "Quality & delivery",
+          "list": [
+            "Playwright end-to-end test suite (qa/ package) covering core user flows.",
+            "Strict TypeScript across every package, Prettier formatting, esbuild bundling."
+          ]
+        },
+        {
+          "h": "Contrast with Shared Expense Tracker — Serverless PWA",
+          "p": "Two deliberately different auth models across my own projects: this one delegates identity control to *itself* (own registration, stateless JWT) because it's a multi-tenant marketplace; ExpenseTracker delegates identity to Google OAuth and authorization to Postgres RLS because it's a two-user app with no server to maintain. Same engineer, different context, different trade-off — not a default reached for out of habit. Delivered solo, end to end — architecture, data model, API, UI, auth, testing, and deploy."
         }
       ]
     },
