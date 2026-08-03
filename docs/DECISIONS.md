@@ -38,6 +38,17 @@ Status: ✅ active · ↩️ superseded · 🔭 future/deferred
 | D19 | Detail pages are an **identical static stub** (same bytes per folder); `main.js` reads the slug from the URL and renders the body from the item's `detail` in `data.js` | Infinitely scalable: new project = ITEM entry + copy a stub. Trade-off: detail body is JS-rendered (acceptable for a personal portfolio; revisit with prerender if SEO demands) | ✅ |
 | D20 | `data.js` exposes `window.TAGS` (taxonomy) + `window.ITEMS` (registry). Item fields: `id, title, org, pillar, tags[], stack[], status, start, end, track, curated, featured, summary, detail, href` | Single contract behind every view | ✅ |
 
+## 2026-08-03 — Chatbot ("Ask about me")
+
+| # | Decision | Rationale | Status |
+|---|----------|-----------|--------|
+| D21 | The chatbot is its **own file** (`chat.js` + a `CHAT` section in `style.css`), loaded by a third `<script>` on every page — not folded into `main.js` | `main.js` is the portfolio; this is a separate product with its own backend and failure modes. One file to delete if it goes away. The trade-off is 35 script tags instead of zero, accepted because the alternative is a 30 KB file with two jobs | ✅ |
+| D22 | Retrieval and generation live in a **separate repo** (`../USI-RAG`), reached over HTTP. The site stays static, with no build step and no key | GitHub Pages cannot hold a secret or run a model. Keeping the corpus, the index and the prompt out of the browser is also what lets the audience/redaction gates be enforced at all — a client-side index would ship the corpus to every visitor | ✅ |
+| D23 | `ENDPOINT` is a constant at the top of `chat.js`, defaulting to `http://localhost:8000`. **Offline is a designed state**: when `fetch` fails the widget says so plainly and offers the email link | The site will be deployed before, or without, a backend. A portfolio chatbot that spins forever is worse than one that admits it is not running | ✅ |
+| D24 | Each answer shows its **sources**. A source is linked only when its USI block id resolves to a real item in `window.ITEMS`; otherwise it renders as plain text | USI has blocks (skills, traits, identity) that this site has no page for. Guessing a URL from an id without checking is how you ship an `<a>` to a 404 | ✅ |
+| D25 | Inline `[block-id]` citations the model emits are styled as chips **only when retrieval actually returned that block**; unmatched ones stay literal text | A model citing something that was never in its context is the failure worth being able to see, not the one worth styling away | ✅ |
+| D26 | A visible disclaimer: answers are generated and can be wrong | The bot speaks for a real person about their real career | ✅ |
+
 ## Future / revisit 🔭
 
 - Tag compression if a tag holds a single item long-term; refactor deep-dive pages into smaller reusable components.
