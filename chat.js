@@ -16,14 +16,51 @@
    message everywhere else. It never fails silently and it never
    pretends to answer.
 
-   Set window.CHAT_ENDPOINT before this script to override per-page.
+   Set window.CHAT_ENDPOINT before this script to hardcode an endpoint
+   for every visitor (a permanently-hosted backend).
+
+   For an on-demand backend (docker-compose + a Cloudflare quick tunnel —
+   see USI-RAG/scripts/tunnel-up.sh), the tunnel URL changes every time it
+   starts, so hardcoding it here would mean a redeploy per demo. Instead,
+   opening the site with ?chat_endpoint=<url> saves that URL to this
+   browser's localStorage and reuses it on later visits, until it's
+   replaced or cleared. Nothing is sent anywhere by visiting without it —
+   the default falls back to the same honest "offline" state as before.
+
    Set ENABLED to false to remove the widget entirely.
    ============================================================ */
 (function () {
   'use strict';
 
   var ENABLED  = true;
-  var ENDPOINT = window.CHAT_ENDPOINT || 'http://localhost:8000';
+
+  var STORAGE_KEY = 'usi-rag-endpoint';
+
+  function paramEndpoint() {
+    var m = /[?&]chat_endpoint=([^&]+)/.exec(location.search);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function storedEndpoint() {
+    try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+  }
+
+  function resolveEndpoint() {
+    if (window.CHAT_ENDPOINT) return window.CHAT_ENDPOINT;
+    var fromUrl = paramEndpoint();
+    if (fromUrl && /^https?:\/\//.test(fromUrl)) {
+      try { localStorage.setItem(STORAGE_KEY, fromUrl); } catch (e) { /* ignore */ }
+      if (history.replaceState) {
+        var stripped = location.pathname +
+          location.search.replace(/([?&])chat_endpoint=[^&]+&?/, '$1').replace(/[?&]$/, '');
+        history.replaceState(null, '', stripped);
+      }
+      return fromUrl;
+    }
+    return storedEndpoint() || 'http://localhost:8000';
+  }
+
+  var ENDPOINT = resolveEndpoint();
 
   /* Asked on first open. Chosen to demonstrate range — one identity
      question, one depth question, one that needs the frontmatter half
@@ -133,7 +170,10 @@
     for (var i = 0; i < (sources || []).length; i++) valid[sources[i].block_id] = true;
 
     var html = esc(text);
-    html = html.replace(/\[([a-z0-9][a-z0-9-]*)\]/gi, function (whole, id) {
+    // [id] is the prompted format; [[id]] shows up too (some models default to
+    // wiki-link style, matching the corpus's own [[wiki-link]] convention) —
+    // both are accepted so a citation never renders with a stray bracket.
+    html = html.replace(/\[{1,2}([a-z0-9][a-z0-9-]*)\]{1,2}/gi, function (whole, id) {
       return valid[id] ? '<span class="chat-cite" title="' + esc(id) + '">' + esc(id) + '</span>' : whole;
     });
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');

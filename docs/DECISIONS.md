@@ -44,10 +44,22 @@ Status: ✅ active · ↩️ superseded · 🔭 future/deferred
 |---|----------|-----------|--------|
 | D21 | The chatbot is its **own file** (`chat.js` + a `CHAT` section in `style.css`), loaded by a third `<script>` on every page — not folded into `main.js` | `main.js` is the portfolio; this is a separate product with its own backend and failure modes. One file to delete if it goes away. The trade-off is 35 script tags instead of zero, accepted because the alternative is a 30 KB file with two jobs | ✅ |
 | D22 | Retrieval and generation live in a **separate repo** (`../USI-RAG`), reached over HTTP. The site stays static, with no build step and no key | GitHub Pages cannot hold a secret or run a model. Keeping the corpus, the index and the prompt out of the browser is also what lets the audience/redaction gates be enforced at all — a client-side index would ship the corpus to every visitor | ✅ |
-| D23 | `ENDPOINT` is a constant at the top of `chat.js`, defaulting to `http://localhost:8000`. **Offline is a designed state**: when `fetch` fails the widget says so plainly and offers the email link | The site will be deployed before, or without, a backend. A portfolio chatbot that spins forever is worse than one that admits it is not running | ✅ |
+| D23 | `ENDPOINT` is a constant at the top of `chat.js`, defaulting to `http://localhost:8000`. **Offline is a designed state**: when `fetch` fails the widget says so plainly and offers the email link | The site will be deployed before, or without, a backend. A portfolio chatbot that spins forever is worse than one that admits it is not running | ↩️ (the "constant" part superseded by D27 — offline-as-designed-state is unchanged) |
 | D24 | Each answer shows its **sources**. A source is linked only when its USI block id resolves to a real item in `window.ITEMS`; otherwise it renders as plain text | USI has blocks (skills, traits, identity) that this site has no page for. Guessing a URL from an id without checking is how you ship an `<a>` to a 404 | ✅ |
 | D25 | Inline `[block-id]` citations the model emits are styled as chips **only when retrieval actually returned that block**; unmatched ones stay literal text | A model citing something that was never in its context is the failure worth being able to see, not the one worth styling away | ✅ |
 | D26 | A visible disclaimer: answers are generated and can be wrong | The bot speaks for a real person about their real career | ✅ |
+
+## 2026-08-03 — Chatbot backend: on-demand hosting
+
+The backend (`../USI-RAG`) had no deployment story until now — D22 kept it out of the
+browser, but D23 assumed *some* long-lived host would eventually answer at a fixed URL.
+That assumption turned out wrong in a useful way.
+
+| # | Decision | Rationale | Status |
+|---|----------|-----------|--------|
+| D27 | The backend runs **on-demand via Docker Compose** (Ollama + `usi_rag.serve` + a Cloudflare quick tunnel), not as an always-up host | A paid always-on server isn't worth it for a low-traffic personal chatbot. `USI-RAG/scripts/tunnel-up.sh` brings the whole stack up in one command and prints a public URL; `docker compose down` tears it back down. "Practicality" over "always available," by explicit choice | ✅ |
+| D28 | `ENDPOINT` in `chat.js` is now **resolved at runtime**, not a hardcoded constant: `window.CHAT_ENDPOINT` (hardcode, for a permanent host) → `?chat_endpoint=<url>` on the page URL (saved to `localStorage`) → the stored value → default `http://localhost:8000` | Cloudflare quick-tunnel URLs are random and change every restart. Editing a constant and redeploying the static site for every demo session would defeat the point of "on-demand." Opening the live site once with the new URL is enough — it's remembered in that browser | ✅ (supersedes D23's "constant" framing; the offline-first fallback D23 established is unchanged — no override present still means the honest offline message) |
+| D29 | `chat.js`'s citation regex accepts both `[block-id]` and `[[block-id]]` | The prompt specifies single brackets, but not every model follows it — `qwen3.5:4b` defaults to the corpus's own `[[wiki-link]]` style. A citation that partially matches and leaves a stray bracket is worse than accepting both forms | ✅ |
 
 ## Future / revisit 🔭
 
@@ -55,3 +67,5 @@ Status: ✅ active · ↩️ superseded · 🔭 future/deferred
 - Organizational tag filters on `involvement.html` (Leadership · Community · International) if the list grows.
 - Prerender/SSG step **only if** SEO of detail pages becomes a priority (would reconcile D19).
 - Light/dark toggle, PT/EN, downloadable CV (backlog in ROADMAP).
+- A **named** Cloudflare Tunnel (stable subdomain, needs a domain on Cloudflare) instead of a quick tunnel, if on-demand sharing via `?chat_endpoint=` per session (D28) proves too manual.
+- GPU passthrough for the `ollama` container is disabled (Docker Desktop's NVIDIA Container Toolkit isn't set up on the host) — CPU inference works but is slow. `docker-compose.yml` in USI-RAG has the commented-out block.

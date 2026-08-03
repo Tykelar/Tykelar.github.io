@@ -87,6 +87,23 @@ The header/footer markup lives **once** and is injected by `main.js` on `DOMCont
 - Feature-detect and fail soft. No console errors on any page.
 - Respect `prefers-reduced-motion` — skip/relax animations when set.
 
+## Chat widget (`chat.js`)
+
+Deliberately a **separate file** from `main.js` (D21) — its own `<script>` tag on every
+page, its own `CHAT` section in `style.css`. It is the front end for a backend that lives
+outside this repo (`../USI-RAG`, D22) and that is not always running (D27); the widget's
+whole job is to degrade honestly when it isn't.
+
+- `ENDPOINT` resolves at load time, in order: `window.CHAT_ENDPOINT` (hardcode, for a
+  permanent host) → `?chat_endpoint=<url>` on the current page (saved to `localStorage`,
+  then stripped from the URL) → the stored value → `http://localhost:8000` (D28). Never
+  edit this as a hardcoded constant for a one-off demo — use the query param.
+- To point the live site at a running backend: run `USI-RAG/scripts/tunnel-up.sh`, then
+  open the site once with the printed `?chat_endpoint=` URL. That browser remembers it
+  until it's replaced or `localStorage` is cleared.
+- Citation matching accepts both `[block-id]` and `[[block-id]]` (D29) — don't narrow it
+  back to one form without checking what the current `CHAT_MODEL` actually emits.
+
 ## Data model (single registry — source of truth)
 
 The technological gallery, the involvement page, the timeline, and the hub "Featured work" are

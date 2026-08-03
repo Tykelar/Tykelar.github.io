@@ -77,6 +77,7 @@ involvement/
 style.css               design system + page styles
 main.js                 shared shell injection + interactions (render, filter, timeline)
 data.js                 single registry: items + tag taxonomy
+chat.js                 "Ask about me" widget — separate file, own backend (../USI-RAG, DECISIONS D21-D29)
 assets/                 img/, icons/, og/
 docs/                   these planning docs (not shipped content)
 ```
