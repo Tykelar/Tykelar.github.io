@@ -171,7 +171,8 @@ window.ITEMS = [
             "Built AI agent skills (Claude Code) deployed in internal engineering repos for automated assistance on complex workflows.",
             "Contributed to architecture + testing of an embedded AI chatbot for in-app platform navigation.",
             "Contributed to architecture + testing of a RAG system letting users query their own uploaded documents (per-user feature toggle).",
-            "Drove integration of AI agents/services into product and engineering workflows."
+            "Drove integration of AI agents/services into product and engineering workflows.",
+            "Personal-project counterpart to this professional RAG work, built and measured"
           ]
         },
         {
@@ -247,13 +248,13 @@ window.ITEMS = [
     "pillar": "education",
     "tags": [],
     "stack": [],
-    "status": "ongoing",
+    "status": "completed",
     "start": "2024-09",
-    "end": null,
+    "end": "2026-07",
     "track": "education",
     "curated": true,
     "featured": false,
-    "summary": "Graduating July 2026. Specializing in scalable infrastructure and AI-ready systems.",
+    "summary": "Completed July 2026 with a final average of 18/20. Specialized in scalable infrastructure and AI-ready systems.",
     "href": null
   },
   {
@@ -272,9 +273,9 @@ window.ITEMS = [
       "QA Architecture",
       "Research"
     ],
-    "status": "ongoing",
+    "status": "completed",
     "start": "2024-09",
-    "end": null,
+    "end": "2026-07",
     "track": "education",
     "curated": true,
     "featured": true,
@@ -478,7 +479,7 @@ window.ITEMS = [
     "id": "expense-tracker",
     "title": "Shared Expense Tracker — Serverless PWA",
     "org": "Personal Project",
-    "icon": "•",
+    "icon": "💸",
     "pillar": "tech",
     "tags": [],
     "stack": [
@@ -693,7 +694,7 @@ window.ITEMS = [
     "id": "rag-mini",
     "title": "Minimal Local RAG System (Python + Ollama)",
     "org": "Self-directed practice project",
-    "icon": "•",
+    "icon": "🔎",
     "pillar": "tech",
     "tags": [
       "ai"
@@ -741,7 +742,7 @@ window.ITEMS = [
         },
         {
           "h": "Why it matters",
-          "p": "Turns \"I know RAG theory\" into \"I built one, evaluated it rigorously, and caught my own eval being overly optimistic\" — a concrete maturity story that covers system design, hands-on coding, and AI-assisted development in one project."
+          "p": "Turns \"I know RAG theory\" into \"I built one, evaluated it rigorously, and caught my own eval being overly optimistic\" — a concrete maturity story that covers system design, hands-on coding, and AI-assisted development in one project. Kept intact and runnable as v1 rather than rewritten in place: USI-RAG — Production RAG Chatbot over the USI Corpus (v2) is the production-stack rebuild (LangChain, Chroma, a public deployment), and each row of its results log is measured against what this from-scratch version already established."
         }
       ]
     },
@@ -1026,7 +1027,8 @@ window.ITEMS = [
           "list": [
             "CV automation — compile a tailored, role-filtered résumé from the corpus.",
             "Personal website builders — regenerate the portfolio site's data from the blocks.",
-            "LLM / agent context packs — emit a curated Markdown bundle to ground a personal AI."
+            "LLM / agent context packs — emit a curated Markdown bundle to ground a personal AI.",
+            "A live RAG chatbot — USI-RAG — Production RAG Chatbot over the USI Corpus (v2) indexes this corpus and answers visitor"
           ]
         },
         {
@@ -1039,6 +1041,68 @@ window.ITEMS = [
       ]
     },
     "href": "projects/usi-corpus.html"
+  },
+  {
+    "id": "usi-rag",
+    "title": "USI-RAG — Production RAG Chatbot over the USI Corpus (v2)",
+    "org": "Self-directed practice project",
+    "icon": "💬",
+    "pillar": "tech",
+    "tags": [
+      "ai"
+    ],
+    "stack": [
+      "Python",
+      "LangChain",
+      "ChromaDB",
+      "Ollama",
+      "nomic-embed-text",
+      "qwen3.5:4b",
+      "Docker",
+      "Docker Compose",
+      "Cloudflare Tunnel",
+      "HTTP (stdlib)"
+    ],
+    "status": "ongoing",
+    "start": "2026-08",
+    "end": null,
+    "track": "projects",
+    "curated": true,
+    "featured": true,
+    "summary": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Minimal Local RAG System (Python + Ollama) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
+    "detail": {
+      "context": "Solo developer · Self-directed practice project",
+      "intro": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Minimal Local RAG System (Python + Ollama) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
+      "sections": [
+        {
+          "h": "Position in the pipeline",
+          "p": "USI-RAG is a downstream consumer of the USI corpus, following the same contract as the personal website's data generator: it imports USI's neutral build.py reader rather than re-implementing frontmatter parsing, and never edits the corpus itself."
+        },
+        {
+          "h": "Architecture",
+          "list": [
+            "Retrieval: LangChain Documents in a persistent Chroma (HNSW) vector store, swappable",
+            "Chunking: Markdown header-aware splitting with heading-trail context prepended to each",
+            "Generation: an LCEL chain (retrieve | format | llm | parse) run against a local Ollama",
+            "Safety (two-layer gate): USI's block-level audience field (public/cv/ai-context/",
+            "Serving: a dependency-free HTTP endpoint (Python stdlib http.server, no FastAPI) with"
+          ]
+        },
+        {
+          "h": "Rigor: an eval-driven, not eyeballed, pipeline",
+          "p": "Every retrieval change is measured against a 27-case golden set before being kept, tracked in a public results log with recall@1/3/5/10 and MRR, at both chunk- and stricter block-matched levels. Notable finding: the embedding model in production had a tokenizer defect — every capitalized token (Wazuh, GitLab, Python) collapsed to the same vector — silently degrading every measurement since row 0. Diagnosing and containing it (lowercasing before embedding) was the single largest recall gain in the project (chunk recall@5 56% → 70%, strict recall@5 48% → 70%) and reframed several \"chunking\" failures as a ranking-layer defect instead."
+        },
+        {
+          "h": "Deployment",
+          "p": "Runs on-demand via Docker Compose (Ollama + the serving container + a Cloudflare quick tunnel), driven by a single script that brings the stack up and prints a public URL — a deliberate \"practicality over always-on\" choice for a low-traffic personal chatbot. The portfolio site's chat.js widget resolves that URL at runtime (query param → localStorage → default), cites the USI block(s) each answer drew from, and degrades to an honest \"offline\" message rather than failing silently when no backend is running."
+        },
+        {
+          "h": "Why it matters",
+          "p": "Extends Minimal Local RAG System (Python + Ollama)'s \"I built RAG from scratch\" story with \"I then rebuilt it on a production stack, measured what the framework bought me at every step, found a defect the embedding vendor didn't document, and shipped it as a safety-gated public-facing chatbot\" — covering retrieval-system design, rigorous experimentation discipline, and applied AI safety (PII redaction, audience-scoped generation) in one project."
+        }
+      ]
+    },
+    "href": "projects/usi-rag.html"
   },
   {
     "id": "vr-architectural-walkthrough",
@@ -1377,5 +1441,22 @@ window.ITEMS = [
     "featured": false,
     "summary": "A blog on personal growth, human behaviour, and the psychology behind how we move through the world — a space for reflection and clarity.",
     "href": "https://emotionsandmomentum.blogspot.com/"
+  },
+  {
+    "id": "publications",
+    "title": "Academic Publications",
+    "org": null,
+    "icon": "•",
+    "pillar": "education",
+    "tags": [],
+    "stack": [],
+    "status": "completed",
+    "start": null,
+    "end": null,
+    "track": "projects",
+    "curated": false,
+    "featured": false,
+    "summary": "Both degree final works are published academic documents and may be listed as publications on CVs and applications.",
+    "href": null
   }
 ];

@@ -28,6 +28,9 @@ items:
   project-rnn-sequence:                { icon: "🔮" }
   project-matlab-simulations:          { icon: "📐" }
   project-usi-corpus:                  { icon: "🗂️", curated: true }
+  project-usi-rag:                     { icon: "💬", curated: true }
+  project-rag-mini:                    { icon: "🔎" }
+  project-expense-tracker:             { icon: "💸" }
   project-saas-marketing-platform:     { icon: "🌐", curated: true }
   project-game-dev:                    { icon: "🕹️" }
   project-spss-analysis:               { icon: "📈" }
