@@ -692,7 +692,7 @@ window.ITEMS = [
   },
   {
     "id": "rag-mini",
-    "title": "Minimal Local RAG System (Python + Ollama)",
+    "title": "Local RAG System — From-Scratch Implementation (v1)",
     "org": "Self-directed practice project",
     "icon": "🔎",
     "pillar": "tech",
@@ -713,10 +713,10 @@ window.ITEMS = [
     "track": "projects",
     "curated": false,
     "featured": false,
-    "summary": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
+    "summary": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py, Python + Ollama) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
     "detail": {
       "context": "Solo developer · Self-directed practice project",
-      "intro": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
+      "intro": "A from-scratch, 100% local RAG pipeline (~110 lines, rag.py, Python + Ollama) built to close a specific gap: solid RAG theory but no hands-on implementation experience. Indexes Markdown docs from my own projects (ExpenseTracker, BreedBreeder, USI) and answers questions over them entirely offline.",
       "sections": [
         {
           "h": "What it does",
@@ -1069,10 +1069,10 @@ window.ITEMS = [
     "track": "projects",
     "curated": true,
     "featured": true,
-    "summary": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Minimal Local RAG System (Python + Ollama) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
+    "summary": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Local RAG System — From-Scratch Implementation (v1) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
     "detail": {
       "context": "Solo developer · Self-directed practice project",
-      "intro": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Minimal Local RAG System (Python + Ollama) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
+      "intro": "A retrieval system over USI — Unified Source of Information that powers the \"Ask about me\" chatbot on my portfolio site. This is v2 of Local RAG System — From-Scratch Implementation (v1) (v1), which stays frozen and untouched on purpose: v1 is a from-scratch, ~110-line, no-framework RAG pipeline; v2 reaches for LangChain + Chroma and measures, row by row, what the framework actually bought over the hand-built version. Both are kept runnable so the comparison stays honest rather than anecdotal.",
       "sections": [
         {
           "h": "Position in the pipeline",
@@ -1098,7 +1098,7 @@ window.ITEMS = [
         },
         {
           "h": "Why it matters",
-          "p": "Extends Minimal Local RAG System (Python + Ollama)'s \"I built RAG from scratch\" story with \"I then rebuilt it on a production stack, measured what the framework bought me at every step, found a defect the embedding vendor didn't document, and shipped it as a safety-gated public-facing chatbot\" — covering retrieval-system design, rigorous experimentation discipline, and applied AI safety (PII redaction, audience-scoped generation) in one project."
+          "p": "Extends Local RAG System — From-Scratch Implementation (v1)'s \"I built RAG from scratch\" story with \"I then rebuilt it on a production stack, measured what the framework bought me at every step, found a defect the embedding vendor didn't document, and shipped it as a safety-gated public-facing chatbot\" — covering retrieval-system design, rigorous experimentation discipline, and applied AI safety (PII redaction, audience-scoped generation) in one project."
         }
       ]
     },
